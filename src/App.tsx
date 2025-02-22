@@ -1,10 +1,10 @@
 import './App.css';
 import { useAppSelector, useAppDispatch } from './app/hooks'
-import { decrement, increment } from './features/counter/counterSlice'
+import { decrement, increment, selectCount } from './features/counter/counterSlice'
 
 function App() {
 
-  const count = useAppSelector((state) => state.root.count)
+  const count = useAppSelector(selectCount)
   const dispatch = useAppDispatch()
   return (
     <div className="App">
