@@ -1,18 +1,33 @@
-import './App.css';
+import { useEffect } from 'react';
+import React from 'react';
+// import './App.css';
 import { useAppSelector, useAppDispatch } from './app/hooks'
-import { decrement, increment, selectCount } from './features/counter/counterSlice'
+import { getusers } from './features/counter/userSlice';
+import { Users } from './app/Interface';
 
 function App() {
 
-  const count = useAppSelector(selectCount)
-  const dispatch = useAppDispatch()
+  const user = useAppSelector(state => state.user.data as Users[])
+  const dispatch = useAppDispatch();
+
+  useEffect(()=>{
+      dispatch(getusers())
+  }, [dispatch])
+
+  console.log(user)
+
+
   return (
     <div className="App">
-          <p>{count}</p>
-        <div>
-            <button onClick={() => dispatch(increment(5))}>+</button>
-            <button onClick={() => dispatch(decrement())}>-</button>
-        </div>
+      {
+        user?.map((userData) => (
+          <React.Fragment key={userData.id}>
+          <h3>{userData.email}</h3>
+          <h2>{userData.id}</h2>
+          <h4>{userData.phone}</h4>
+          </React.Fragment>
+        ))
+      }
     </div>
   );
 }
